@@ -1,29 +1,38 @@
 
+/*
+ * IO Operations 
+ */
+
+/*
+ * Write a program to count the number of times a character appears in 
+a File . 
+Sample Input and Output : 
+Enter the file name 
+Input.txt 
+Enter the character to be counted 
+r 
+File 'Input.txt' has 99 instances of letter 'r'.
+*/
+
+import java.io.FileReader;
+import java.io.IOException;
+
 public class Solution1 {
     public static void main(String[] args) {
-        System.out.println("Integer range :");
-        System.out.println("min: " + Integer.MIN_VALUE);
-        System.out.println("max: " + Integer.MAX_VALUE);
-
-        System.out.println("Double range :");
-        System.out.println("min: " + Double.MIN_VALUE);
-        System.out.println("max: " + Double.MAX_VALUE);
-
-        System.out.println("Long range :");
-        System.out.println("min: " + Long.MIN_VALUE);
-        System.out.println("max: " + Long.MAX_VALUE);
-
-        System.out.println("Short range :");
-        System.out.println("min: " + Short.MIN_VALUE);
-        System.out.println("max: " + Short.MAX_VALUE);
-
-        System.out.println("Byte range :");
-        System.out.println("min: " + Byte.MIN_VALUE);
-        System.out.println("max: " + Byte.MAX_VALUE);
-
-        System.out.println("Float range :");
-        System.out.println("min: " + Float.MIN_VALUE);
-        System.out.println("max: " + Float.MAX_VALUE);
-
+        try {
+            FileReader reader = new FileReader("Input.txt");
+            char searchChar = 'r'; // Character to be counted
+            int charCount = 0;
+            int charRead;
+            while ((charRead = reader.read()) != -1) {
+                if ((char) charRead == searchChar) {
+                    charCount++;
+                }
+            }
+            reader.close();
+            System.out.println("File 'Input.txt' has " + charCount + " instances of letter '" + searchChar + "'.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

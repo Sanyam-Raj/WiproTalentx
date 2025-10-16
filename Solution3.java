@@ -1,32 +1,108 @@
-import java.util.Scanner;
 
 /*
- * Write a Java program that reads an integer number (between 1 and 255) from the user and prints the binary representation of the number. 
- * The answer should be printed as a String 
- * 
- * Note : The output displayed should contain 8 digits and should be padded with leading 0s(zeros), in case the retured String contains less than 8 characters 
- * 
- * For example , if the user enters the value 16 , then the output shoulf be 0001000
- * ans if the user enters the value 100 , the output shoudl be 01100100
- * 
- * You are excepted to use Integer class conversion method described in the PDF file. 
- * Use Scanner class to accept user inputs.
- * 
- * [ Hint : You may use String.format() method for the expected output ]
- * 
+ * Object Serialization 
  */
+
+/*
+ * Create a class called Employye with properties 
+ name(String) 
+ dateOfBirth(java.util.Date)
+ department(String)
+ designation(String)
+ and salary(double)
+
+Create respective getter and setter methods and constructors (no-argument 
+constructor and parameteized constructor ) for the same
+)
+
+
+Create an object of the employee class and save this object in a file called
+data using serilaization 
+Later using deserialization read this object and print 
+the properties of this object 
+ */
+
+import java.io.*;
+
+class Employee implements Serializable {
+    private String name;
+    private java.util.Date dateOfBirth;
+    private String department;
+    private String designation;
+    private double salary;
+
+    public Employee() {
+
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public java.util.Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+
+    public String getDesignation() {
+        return designation;
+    }
+
+    public double getSalary() {
+        return salary;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDateOfBirth(java.util.Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public void setDesignation(String designation) {
+        this.designation = designation;
+    }
+
+    public void setSalary(double salary) {
+        this.salary = salary;
+    }
+
+}
+
 public class Solution3 {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        try {
+            Employee employee = new Employee();
 
-        System.out.println("Enter the number: ");
-        int num = sc.nextInt();
+            // Set employee properties
+            FileOutputStream fileOut = new FileOutputStream("data");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(employee);
+            out.close();
+            fileOut.close();
+            System.out.println("Employee object serialized and saved to 'data' file.");
 
-        String binary = Integer.toBinaryString(num);
-        binary = String.format("%8s", binary).replace(' ', '0');
+            // Deserialization
+            FileInputStream fileIn = new FileInputStream("data");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            Employee serializedEmployee = (Employee) in.readObject();
+            in.close();
+            fileIn.close();
+            System.out.println("Employee object deserialized.");
 
-        System.out.println("Binary representation: " + binary);
-
-        sc.close();
+            // Print properties of deserialized employee object
+        } catch (IOException i) {
+            i.printStackTrace();
+        } catch (ClassNotFoundException c) {
+            c.printStackTrace();
+        }
     }
 }
